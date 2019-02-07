@@ -1,0 +1,15 @@
+image: node:10
+
+stages:
+  - build-deploy
+
+build-deploy:
+  stage: build-deploy
+  script:
+    - apt-get update
+    - apt-get install sshpass
+    - npm install
+    - npm run build
+    - sshpass -p "asdf321" scp -oStrictHostKeyChecking=no -r build/* gitlab@10.70.0.13:/home/gitlab/web/matopeli
+  tags:
+    - grunner
